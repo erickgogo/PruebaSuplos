@@ -1,0 +1,63 @@
+<div style="width: 100%;">
+
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand">Buscador de imágenes</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Categorias
+            </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" (click)="getData(item)" *ngFor="let item of categories">{{item.name}}</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="d-flex" style="margin-left: 50%;">
+                    <input class="form-control me-2" type="search" placeholder="Buscar imágenes" aria-label="Search" [(ngModel)]="search" (keyup.enter)="getData()">
+                    <button class="btn btn-outline-success" type="submit" (click)="getData()">Buscar</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+<div fxLayoutGap="20px" fxLayoutAlign="center start" fxLayout="row" class="cards-container">
+    <div fxFlex="80" fxLayoutGap="20px" fxLayout="column">
+        <div *ngIf="category" fxLayout="row">
+            <h3>Categoría: {{category.name}}
+                <span class="material-icons" (click)="getData('none')">
+          clear
+        </span>
+            </h3>
+        </div>
+        <div *ngIf="!images.length" fxLayout="row">
+            <h3>No se encontraron resultados </h3>
+        </div>
+        <div fxFlex="100" class="container">
+            <div fxFlex="100" class="row" fxLayoutGap="10px" fxLayoutAlign="center start">
+                <div class="card " style="width: 16rem;" *ngFor="let item of images">
+                    <img src="{{item.previewURL}}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <h6>Me gusta : {{item.likes}}</h6>
+                            </li>
+                            <li class="list-group-item">
+                                <h6>Vistas : {{item.views}}</h6>
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge bg-light text-dark">{{item.tags | slice:0:30}}</span>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
